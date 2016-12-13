@@ -1,0 +1,23 @@
+{
+  "name": "Eat-MEAN",
+  "version": "1.0.0",
+  "description": "Simple MEAN app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmdoane/Eat-MEAN.git"
+  },
+  "keywords": [],
+  "author": "Brian Doane",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmdoane/Eat-MEAN/issues"
+  },
+  "homepage": "https://github.com/bmdoane/Eat-MEAN#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
