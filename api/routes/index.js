@@ -2,7 +2,7 @@
 
 const { Router } = require('express')
 const router = Router()
-const { restaurantsGetAll, restaurantsGetOne } = require('../controllers/restaurantsCtrl')
+const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne } = require('../controllers/restaurantsCtrl')
 
 router
 	.route('/restaurants')
@@ -11,5 +11,9 @@ router
 router
 	.route('/restaurants/:restaurantId')
 	.get(restaurantsGetOne)
+
+router
+	.route('/restaurants/new')
+	.post(restaurantsAddOne)	
 
 module.exports = router

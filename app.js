@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-const { urlEncoded } = require('body-parser')
+const { urlencoded } = require('body-parser')
 
 const routes = require('./api/routes')
 
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 // Setting static directory.  path.join to avoid syntactic issues of direct restructures on different operating systems.
 app.use(express.static(path.join(__dirname, 'public')))
 // Only need strings and arrays from form body
-app.use(urlEncoded({ extended: false }))
+app.use(urlencoded({ extended: false }))
 
 app.use('/api', routes)
 

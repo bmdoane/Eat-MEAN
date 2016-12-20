@@ -31,3 +31,18 @@ module.exports.restaurantsGetOne = (req, res) => {
 			.status(200)
 			.json(thisRestaurant)
 }
+
+module.exports.restaurantsAddOne = (req, res) => {
+	console.log("Post new restaurant")
+	console.log("req.body", req.body)
+		res
+			.status(200)
+			.json(req.body)	
+}
+
+
+
+
+
+
+
