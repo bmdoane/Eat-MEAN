@@ -3,13 +3,27 @@ const restaurantData = require('../data/restaurantSeed.json')
 
 module.exports.restaurantsGetAll = (req, res) => {
 		console.log("Get restaurants")
+		console.log("req.query", req.query)
+		// Setting querystring params, limiting data return for pagination
+		let offset = 0
+		let count = 0
+
+		if (req.query && req.query.offset) {
+			offset = parseInt(req.query.offset, 10)
+		}
+
+		if (req.query && req.query.count) {
+			count = parseInt(req.query.count, 10)
+		}
+
+		const returnData = restaurantData.slice(offset, offset + count)		
+
 		res
 			.status(200)
-			.json(restaurantData)
+			.json(returnData)
 }
 
 module.exports.restaurantsGetOne = (req, res) => {
-		console.log("req.params", req.params)
 		const restaurantId = req.params.restaurantId
 		const thisRestaurant = restaurantData[restaurantId]
 		console.log("Get restaurantID", restaurantId)
