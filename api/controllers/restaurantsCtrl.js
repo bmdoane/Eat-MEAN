@@ -1,35 +1,44 @@
 'use strict'
+
+const { get } = require('../data/dbconnection.js')
 const restaurantData = require('../data/restaurantSeed.json')
 
 module.exports.restaurantsGetAll = (req, res) => {
-		console.log("Get restaurants")
-		console.log("req.query", req.query)
-		// Setting querystring params, limiting data return for pagination
-		let offset = 0
-		let count = 0
 
-		if (req.query && req.query.offset) {
-			offset = parseInt(req.query.offset, 10)
-		}
+	const db = get()
+	const collection = db.collection('restaurants')
 
-		if (req.query && req.query.count) {
-			count = parseInt(req.query.count, 10)
-		}
+	let offset = 0
+	let count = 5
 
-		const returnData = restaurantData.slice(offset, offset + count)		
+	if (req.query && req.query.offset) {
+		offset = parseInt(req.query.offset, 10)
+	}
 
-		res
-			.status(200)
-			.json(returnData)
+	if (req.query && req.query.count) {
+		count = parseInt(req.query.count, 10)
+	}
+	
+	collection
+		.find()
+		.skip(offset)
+		.limit(count)
+		.toArray((err, docs) => {
+			console.log('Found restaurants', docs)
+			res
+				.status(200)
+				.json(docs)		
+		})
+		
 }
 
 module.exports.restaurantsGetOne = (req, res) => {
-		const restaurantId = req.params.restaurantId
-		const thisRestaurant = restaurantData[restaurantId]
-		console.log("Get restaurantID", restaurantId)
-		res
-			.status(200)
-			.json(thisRestaurant)
+	const restaurantId = req.params.restaurantId
+	const thisRestaurant = restaurantData[restaurantId]
+	console.log("Get restaurantID", restaurantId)
+	res
+		.status(200)
+		.json(thisRestaurant)
 }
 
 module.exports.restaurantsAddOne = (req, res) => {
