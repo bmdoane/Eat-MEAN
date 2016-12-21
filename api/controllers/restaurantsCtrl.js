@@ -1,6 +1,7 @@
 'use strict'
 
 const { get } = require('../data/dbconnection.js')
+const { ObjectId } = require('mongodb')
 const restaurantData = require('../data/restaurantSeed.json')
 
 module.exports.restaurantsGetAll = (req, res) => {
@@ -29,16 +30,23 @@ module.exports.restaurantsGetAll = (req, res) => {
 				.status(200)
 				.json(docs)		
 		})
-		
+
 }
 
 module.exports.restaurantsGetOne = (req, res) => {
+	const db = get()
+	const collection = db.collection('restaurants')
+
 	const restaurantId = req.params.restaurantId
-	const thisRestaurant = restaurantData[restaurantId]
 	console.log("Get restaurantID", restaurantId)
-	res
-		.status(200)
-		.json(thisRestaurant)
+	collection
+		.findOne({
+			_id : ObjectId(restaurantId)
+		}, (err, doc) => {
+			res
+				.status(200)
+				.json(doc)			
+		})
 }
 
 module.exports.restaurantsAddOne = (req, res) => {
