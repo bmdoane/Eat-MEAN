@@ -50,11 +50,25 @@ module.exports.restaurantsGetOne = (req, res) => {
 }
 
 module.exports.restaurantsAddOne = (req, res) => {
+	const db = get()
+	const collection = db.collection('restaurants')
+	let newRestaurant
+
 	console.log("Post new restaurant")
-	console.log("req.body", req.body)
+
+	if (req.body && req.body.name && req.body.rating) {
+		newRestaurant = req.body
+		newRestaurant.rating = parseInt(req.body.rating, 10)
+		console.log(newRestaurant)
 		res
 			.status(200)
-			.json(req.body)	
+			.json(req.body)			
+	} else {
+		console.log("Data missing from body")
+		res
+			.status(400)
+			.json({ message: "Required data missing from body" })
+	}
 }
 
 
