@@ -59,10 +59,12 @@ module.exports.restaurantsAddOne = (req, res) => {
 	if (req.body && req.body.name && req.body.rating) {
 		newRestaurant = req.body
 		newRestaurant.rating = parseInt(req.body.rating, 10)
-		console.log(newRestaurant)
-		res
-			.status(200)
-			.json(req.body)			
+		collection.insertOne(newRestaurant, (err, response) => {
+			console.log(response)
+			res
+				.status(201)
+				.json(response)						
+		})
 	} else {
 		console.log("Data missing from body")
 		res
