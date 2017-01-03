@@ -60,10 +60,10 @@ module.exports.restaurantsAddOne = (req, res) => {
 		newRestaurant = req.body
 		newRestaurant.rating = parseInt(req.body.rating, 10)
 		collection.insertOne(newRestaurant, (err, response) => {
-			console.log(response)
+			console.log(response.ops)
 			res
 				.status(201)
-				.json(response)						
+				.json(response.ops)						
 		})
 	} else {
 		console.log("Data missing from body")
