@@ -1,13 +1,13 @@
 'use strict'
 
-const { get } = require('../data/dbconnection.js')
-const { ObjectId } = require('mongodb')
-const restaurantData = require('../data/restaurantSeed.json')
+const mongoose = require('mongoose')
+const Restaurant = mongoose.model('Restaurant')
+
+// const { get } = require('../data/dbconnection.js')
+// const { ObjectId } = require('mongodb')
+// const restaurantData = require('../data/restaurantSeed.json')
 
 module.exports.restaurantsGetAll = (req, res) => {
-
-	const db = get()
-	const collection = db.collection('restaurants')
 
 	let offset = 0
 	let count = 5
@@ -20,16 +20,23 @@ module.exports.restaurantsGetAll = (req, res) => {
 		count = parseInt(req.query.count, 10)
 	}
 	
-	collection
+	Restaurant
 		.find()
-		.skip(offset)
-		.limit(count)
-		.toArray((err, docs) => {
-			console.log('Found restaurants', docs)
+		.exec((err, restaurants) => {
+			console.log('Found Restaurants', restaurants.length)
 			res
-				.status(200)
-				.json(docs)		
+				.json(restaurants)
 		})
+	// collection
+	// 	.find()
+	// 	.skip(offset)
+	// 	.limit(count)
+	// 	.toArray((err, docs) => {
+	// 		console.log('Found restaurants', docs)
+	// 		res
+	// 			.status(200)
+	// 			.json(docs)		
+	// 	})
 
 }
 
