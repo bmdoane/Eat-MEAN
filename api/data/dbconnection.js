@@ -1,29 +1,20 @@
 'use strict'
 
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
 const MONGODB_URL = 'mongodb://localhost:27017/meanRestaurant'
 
-let _connection = null
+mongoose.connect(MONGODB_URL)
 
-// Method to store connection
-let open = () => {
-	// Callback first arg handles error, second is database
-	MongoClient.connect(MONGODB_URL, (err, db) => {
-		if (err) {
-			console.log('DB connection failed')
-			return
-		}
-		_connection = db
-		console.log('DB connection open')
-	})
-}
+mongoose.connection.on('connected', () => {
+	console.log(`Mongoose connected to ${MONGODB_URL}`)
+})
 
-// Method to return connection
-let get = () => {
-	return _connection
-}
+mongoose.connection.on('disconnected', () => {
+	console.log(`Mongoose disconnected`)
+})
 
-module.exports = {
-	open : open,
-	get : get
-}
+mongoose.connection.on('error', (err) => {
+	console.log(`Mongoose connection error: ${err}`)
+})
+
+// Listen for events in the NODE process
