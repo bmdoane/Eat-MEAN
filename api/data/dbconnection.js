@@ -5,6 +5,7 @@ const MONGODB_URL = 'mongodb://localhost:27017/meanRestaurant'
 
 mongoose.connect(MONGODB_URL)
 
+// Connection events
 mongoose.connection.on('connected', () => {
 	console.log(`Mongoose connected to ${MONGODB_URL}`)
 })
@@ -17,25 +18,30 @@ mongoose.connection.on('error', (err) => {
 	console.log(`Mongoose connection error: ${err}`)
 })
 
-// Listen for events in the NODE process
-// Log for stopping Nodemon with CTRL-C
-process.on('SIGINT', () => {
-	mongoose.connection.close(() => {
-  	console.log('Mongoose disconnected through app termination (SIGINT)')
-    process.exit(0)
+// CAPTURE APP TERMINATION / RESTART EVENTS
+// To be called when process is restarted or terminated
+function nodeProcessShutdown(msg, callback) {
+  mongoose.connection.close(() => {
+    console.log(`Mongoose disconnected through ${msg}`)
+    callback()
   })
-})
-// Log for Heroku
-process.on('SIGTERM', () => {
-	mongoose.connection.close(() => {
-  	console.log('Mongoose disconnected through app termination (SIGTERM)')
-    process.exit(0)
-  })
-})
-// For Nodemon restarts
+}
+
+// For nodemon restarts
 process.once('SIGUSR2', () => {
-	mongoose.connection.close(() => {
-  	console.log('Mongoose disconnected through app termination (SIGUSR2)')
+  nodeProcessShutdown('nodemon restart', () => {
     process.kill(process.pid, 'SIGUSR2')
+  })
+})
+// For app termination
+process.on('SIGINT', () => {
+  nodeProcessShutdown('App termination (SIGINT)', () => {
+    process.exit(0)
+  })
+})
+// For Heroku app termination
+process.on('SIGTERM', () => {
+  nodeProcessShutdown('App termination (SIGTERM)', () => {
+    process.exit(0)
   })
 })
