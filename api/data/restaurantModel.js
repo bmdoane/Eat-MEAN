@@ -1,9 +1,9 @@
 'use strict'
 
-const { Schema, model } = require('mongoose')
+const mongoose = require('mongoose')
 
 // Schema with validations
-const restaurantSchema = new Schema({
+const restaurantSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -26,4 +26,4 @@ const restaurantSchema = new Schema({
 })
 
 // Params - Model name, schema, optional(mongodb collection)
-model('Restaurant', restaurantSchema)
+mongoose.model('Restaurant', restaurantSchema)
