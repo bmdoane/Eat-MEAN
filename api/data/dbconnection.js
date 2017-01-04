@@ -45,3 +45,6 @@ process.on('SIGTERM', () => {
     process.exit(0)
   })
 })
+
+// Bring in Schemas and Models
+require('./restaurantModel.js')
