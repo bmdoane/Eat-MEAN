@@ -3,6 +3,8 @@
 const mongoose = require('mongoose')
 const MONGODB_URL = 'mongodb://localhost:27017/meanRestaurant'
 
+mongoose.Promise = Promise
+
 mongoose.connect(MONGODB_URL)
 
 // Connection events
