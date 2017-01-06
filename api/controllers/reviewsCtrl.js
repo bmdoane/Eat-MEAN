@@ -10,7 +10,7 @@ module.exports.reviewsGetAll = (req, res) => {
 	
 	Restaurant
 		.findById(restaurantId)
-		// .select('reviews')
+		.select('reviews')
 		.exec((err, doc) => {
 			console.log('doc', doc)
 			res
