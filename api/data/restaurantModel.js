@@ -25,15 +25,6 @@ const reviewSchema = new Schema({
 	} 	
 })
 
-const addressSchema = new Schema({
-	formatted_address: {
-		type: String,
-		required: true
-	},
-	lat: Number,
-	lng: Number
-})
-
 // Parent Schema with validations
 const restaurantSchema = new Schema({
 	name: {
@@ -54,7 +45,16 @@ const restaurantSchema = new Schema({
 		"default": 0
 	},
 	type: [String],
-	location: [addressSchema],
+	formatted_address: {
+		type: String,
+		required: true
+	},
+	geometry: {
+		location: {
+			type: [Number],
+			index: '2sphere'		
+		}
+	},
 	reviews: [reviewSchema]
 })
 

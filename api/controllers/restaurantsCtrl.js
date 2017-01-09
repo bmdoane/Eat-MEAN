@@ -3,10 +3,46 @@
 const mongoose = require('mongoose')
 const Restaurant = mongoose.model('Restaurant')
 
+// Trouble getting geoNear to work.  Concerns with MongoDB data, model and this method.
+// const runGeoQuery = (req, res) => {
+
+// 	let lng = parseFloat(req.query.lng)
+// 	let lat = parseFloat(req.query.lat)
+
+// 	// A geoJSON point
+// 	let point = {
+// 		type: "Point",
+// 		coordinates: [lng, lat]
+// 	}
+
+// 	let geoOptions = {
+// 		spherical: true,
+// 		maxDistance: 200000,
+// 		num: 5
+// 	}
+
+// 	Restaurant
+// 		.geoNear(point, geoOptions, function(err, results, stats) {
+// 			console.log("point", point)
+// 			console.log("geoOptions", geoOptions)
+// 			console.log("results", results)
+// 			console.log("stats", stats)
+// 			res
+// 				.status(200)
+// 				.json(results)
+// 		})
+
+// }
+
 module.exports.restaurantsGetAll = (req, res) => {
 
 	let offset = 0
 	let count = 5
+
+	// if (req.query && req.query.lat & req.query.lng) {
+	// 	runGeoQuery(req, res)
+	// 	return
+	// }
 
 	if (req.query && req.query.offset) {
 		offset = parseInt(req.query.offset, 10)
@@ -30,7 +66,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 module.exports.restaurantsGetOne = (req, res) => {
 	const restaurantId = req.params.restaurantId
 	console.log("Get restaurantID", restaurantId)
-	
+
 	Restaurant
 		.findById(restaurantId)
 		.exec((err, doc) => {
