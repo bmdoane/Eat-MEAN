@@ -98,20 +98,23 @@ module.exports.restaurantsGetOne = (req, res) => {
 	Restaurant
 		.findById(restaurantId)
 		.exec((err, doc) => {
+			let response = {
+				status: 200,
+				message: doc
+			}
 			if (err) {
 				console.log('Error finding hotel')
-				res
-					.status(500)
-					.json(err)
+				response.status = 500
+				response.message = err
 			} else if (!doc) {
-				res
-					.status(404)
-					.json(err)
-			} else {
-				res
-					.status(200)
-					.json(doc)							
+				response.status = 404
+				response.message = {
+					"message" : "Hotel ID not found"
+				}
 			}
+			res
+				.status(response.status)
+				.json(response.message)							
 		})
 }
 
