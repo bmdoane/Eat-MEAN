@@ -14,13 +14,13 @@
 // )
 
 // Create _id for one restaurant with a second review
-db.restaurants.update(
-	{
-		name: "Loveless Cafe"
-	},
-	{
-		$set: {
-			"reviews.1._id" : ObjectId()
-		}
-	}
-)
+// db.restaurants.update(
+// 	{
+// 		name: "Loveless Cafe"
+// 	},
+// 	{
+// 		$set: {
+// 			"reviews.1._id" : ObjectId()
+// 		}
+// 	}
+// )
