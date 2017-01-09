@@ -38,6 +38,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 
 	let offset = 0
 	let count = 5
+	let maxCount = 10
 
 	// if (req.query && req.query.lat & req.query.lng) {
 	// 	runGeoQuery(req, res)
@@ -53,17 +54,41 @@ module.exports.restaurantsGetAll = (req, res) => {
 	}
 
 	// API Golden Rule - Always send a response, status and message
+	if (isNaN(offset) || isNaN(count)) {
+		res
+			.status(400)
+			.json({
+				"message" : "If supplied in querystring, count and offset should be a number"
+			})
+		return
+	}
 
+	if (count > maxCount) {
+		res 
+			.status(400)
+			.json({
+				"message" : `Count limit of ${maxCount} exceeded`
+			})
+		return
+	}
 	
 	Restaurant
 		.find()
 		.skip(offset)
 		.limit(count)		
 		.exec((err, restaurants) => {
-			console.log('Found Restaurants', restaurants.length)
-			res
-				.json(restaurants)
+			if (err) {
+				console.log("Error finding hotels")
+				res
+					.status(500)
+					.json(err)
+			} else {
+				console.log('Found Restaurants', restaurants.length)
+				res
+					.json(restaurants)			
+			}
 		})
+
 }
 
 module.exports.restaurantsGetOne = (req, res) => {
@@ -73,9 +98,20 @@ module.exports.restaurantsGetOne = (req, res) => {
 	Restaurant
 		.findById(restaurantId)
 		.exec((err, doc) => {
-			res
-				.status(200)
-				.json(doc)			
+			if (err) {
+				console.log('Error finding hotel')
+				res
+					.status(500)
+					.json(err)
+			} else if (!doc) {
+				res
+					.status(404)
+					.json(err)
+			} else {
+				res
+					.status(200)
+					.json(doc)							
+			}
 		})
 }
 
