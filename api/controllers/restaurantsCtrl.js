@@ -51,6 +51,9 @@ module.exports.restaurantsGetAll = (req, res) => {
 	if (req.query && req.query.count) {
 		count = parseInt(req.query.count, 10)
 	}
+
+	// API Golden Rule - Always send a response, status and message
+
 	
 	Restaurant
 		.find()

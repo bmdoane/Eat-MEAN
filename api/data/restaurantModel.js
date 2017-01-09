@@ -50,7 +50,7 @@ const restaurantSchema = new Schema({
 		required: true
 	},
 	geometry: {
-		location: {
+		coordinates: {
 			type: [Number],
 			index: '2sphere'		
 		}
