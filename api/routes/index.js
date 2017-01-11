@@ -2,8 +2,8 @@
 
 const { Router } = require('express')
 const router = Router()
-const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne } = require('../controllers/restaurantsCtrl')
-const { reviewsGetAll, reviewsGetOne, reviewsAddOne } = require('../controllers/reviewsCtrl')
+const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne, restaurantsUpdateOne } = require('../controllers/restaurantsCtrl')
+const { reviewsGetAll, reviewsGetOne, reviewsAddOne, reviewsUpdateOne } = require('../controllers/reviewsCtrl')
 
 router
 	.route('/restaurants')
@@ -13,6 +13,7 @@ router
 router
 	.route('/restaurants/:restaurantId')
 	.get(restaurantsGetOne)
+	.put(restaurantsUpdateOne)
 
 // Reviews routes
 router
@@ -23,5 +24,6 @@ router
 router
 	.route('/restaurants/:restaurantId/reviews/:reviewId')
 	.get(reviewsGetOne)	
-
+	.put(reviewsUpdateOne)
+		
 module.exports = router

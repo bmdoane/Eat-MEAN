@@ -162,6 +162,64 @@ module.exports.restaurantsAddOne = (req, res) => {
 		})
 }
 
+module.exports.restaurantsUpdateOne = (req, res) => {
+	const restaurantId = req.params.restaurantId
+	console.log('Get restaurantID', restaurantId)
+
+	Restaurant
+		.findById(restaurantId)
+		// To exclude fields from update, in this case sub docs
+		.select('-reviews')
+		.exec((err, doc) => {
+			let response = {
+				status: 200,
+				message: doc
+			}
+			if (err) {
+				console.log('Error finding restaurant')
+				response.status = 500
+				response.message = err
+			} else if (!doc) {
+				console.log('RestaurantId not found in database', restaurantId)
+				response.status = 404
+				response.message = {
+					'message' : `Restaurant ID ${restaurantId} not found`
+				}
+			} 
+			if (response.status !== 200) {
+				res
+					.status(response.status)
+					.json(response.message)											
+			} else {
+				doc.name = req.body.name,
+				doc.rating = parseInt(req.body.rating),
+				doc.photos = splitArray(req.body.photos),
+				doc.price_level = parseInt(req.body.price_level),
+				doc.types = splitArray(req.body.types),
+				doc.formatted_address = req.body.formatted_address,
+				doc.geometry = {
+					coordinates: [
+						parseFloat(req.body.lng), 
+						parseFloat(req.body.lat)
+					]
+				}
+
+				doc.save((err, restaurantUpdated) => {
+					if (err) {
+						res
+							.status(500)
+							.json(err)
+					} else {
+						res
+							// Successfull but no content
+							.status(204)
+							.json()
+					}
+				})				
+			}
+		})	
+}
+
 
 
 

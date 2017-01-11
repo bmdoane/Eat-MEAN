@@ -131,3 +131,61 @@ module.exports.reviewsAddOne = (req, res) => {
 			}
 		})
 }
+
+module.exports.reviewsUpdateOne = (req, res) => {
+  let restaurantId = req.params.restaurantId
+  let reviewId = req.params.reviewId
+  console.log(`PUT reviewId ${reviewId} for restaurantId ${restaurantId}`)
+
+  Restaurant
+    .findById(restaurantId)
+    .select('reviews')
+    .exec((err, restaurant) => {
+      let thisReview
+      let response = {
+        status : 200,
+        message : {}
+      }
+      if (err) {
+        console.log('Error finding restaurant')
+        response.status = 500
+        response.message = err
+      } else if(!restaurant) {
+        console.log('Restaurant ID not found in database', RestaurantId)
+        response.status = 404
+        response.message = {
+          'message' : `Restaurant ID ${restaurantId} not found` 
+        }
+      } else {
+        // Get the review
+        thisReview = restaurant.reviews.id(reviewId)
+        // If the review doesn't exist Mongoose returns null
+        if (!thisReview) {
+          response.status = 404
+          response.message = {
+            'message' : `Review ID ${reviewId} not found`
+          }
+        }
+      }
+      if (response.status !== 200) {
+        res
+          .status(response.status)
+          .json(response.message)
+      } else {
+        thisReview.name = req.body.name
+        thisReview.rating = parseInt(req.body.rating, 10)
+        thisReview.review = req.body.review
+        restaurant.save(function(err, restaurantUpdated) {
+          if (err) {
+            res
+              .status(500)
+              .json(err)
+          } else {
+            res
+              .status(204)
+              .json()
+          }
+        })
+      }
+    })	
+}
