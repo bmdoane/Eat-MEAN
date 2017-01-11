@@ -119,9 +119,10 @@ module.exports.restaurantsGetOne = (req, res) => {
 		})
 }
 
+// Add restaurant
 // Helper function
-let _splitArray = (input) => {
-  let output;
+let splitArray = (input) => {
+  let output
   if (input && input.length > 0) {
     output = input.split(";")
   } else {
@@ -136,9 +137,9 @@ module.exports.restaurantsAddOne = (req, res) => {
 		.create({
 			name: req.body.name,
 			rating: parseInt(req.body.rating),
-			photos: _splitArray(req.body.photos),
+			photos: splitArray(req.body.photos),
 			price_level: parseInt(req.body.price_level),
-			types: _splitArray(req.body.types),
+			types: splitArray(req.body.types),
 			formatted_address: req.body.formatted_address,
 			geometry: {
 				coordinates: [

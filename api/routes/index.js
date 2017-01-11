@@ -3,7 +3,7 @@
 const { Router } = require('express')
 const router = Router()
 const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne } = require('../controllers/restaurantsCtrl')
-const { reviewsGetAll, reviewsGetOne } = require('../controllers/reviewsCtrl')
+const { reviewsGetAll, reviewsGetOne, reviewsAddOne } = require('../controllers/reviewsCtrl')
 
 router
 	.route('/restaurants')
@@ -18,6 +18,7 @@ router
 router
 	.route('/restaurants/:restaurantId/reviews')
 	.get(reviewsGetAll)
+	.post(reviewsAddOne)
 
 router
 	.route('/restaurants/:restaurantId/reviews/:reviewId')
