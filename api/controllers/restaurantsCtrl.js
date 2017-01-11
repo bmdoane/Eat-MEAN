@@ -11,7 +11,7 @@ const Restaurant = mongoose.model('Restaurant')
 
 // 	// A geoJSON point
 // 	let point = {
-// 		type: "Point",
+// 		type: 'Point',
 // 		coordinates: [lng, lat]
 // 	}
 
@@ -23,10 +23,10 @@ const Restaurant = mongoose.model('Restaurant')
 
 // 	Restaurant
 // 		.geoNear(point, geoOptions, function(err, results, stats) {
-// 			console.log("point", point)
-// 			console.log("geoOptions", geoOptions)
-// 			console.log("results", results)
-// 			console.log("stats", stats)
+// 			console.log('point', point)
+// 			console.log('geoOptions', geoOptions)
+// 			console.log('results', results)
+// 			console.log('stats', stats)
 // 			res
 // 				.status(200)
 // 				.json(results)
@@ -58,7 +58,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 		res
 			.status(400)
 			.json({
-				"message" : "If supplied in querystring, count and offset should be a number"
+				'message' : 'If supplied in querystring, count and offset should be a number'
 			})
 		return
 	}
@@ -67,7 +67,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 		res 
 			.status(400)
 			.json({
-				"message" : `Count limit of ${maxCount} exceeded`
+				'message' : `Count limit of ${maxCount} exceeded`
 			})
 		return
 	}
@@ -78,7 +78,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 		.limit(count)		
 		.exec((err, restaurants) => {
 			if (err) {
-				console.log("Error finding restaurants")
+				console.log('Error finding restaurants')
 				res
 					.status(500)
 					.json(err)
@@ -93,7 +93,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 
 module.exports.restaurantsGetOne = (req, res) => {
 	const restaurantId = req.params.restaurantId
-	console.log("Get restaurantID", restaurantId)
+	console.log('Get restaurantID', restaurantId)
 
 	Restaurant
 		.findById(restaurantId)
@@ -110,7 +110,7 @@ module.exports.restaurantsGetOne = (req, res) => {
 				console.log('RestaurantId not found in database', restaurantId)
 				response.status = 404
 				response.message = {
-					"message" : `Restaurant ID not found ${restaurantId}`
+					'message' : `Restaurant ID not found ${restaurantId}`
 				}
 			}
 			res
@@ -124,7 +124,7 @@ module.exports.restaurantsGetOne = (req, res) => {
 let splitArray = (input) => {
   let output
   if (input && input.length > 0) {
-    output = input.split(";")
+    output = input.split(';')
   } else {
     output = []
   }

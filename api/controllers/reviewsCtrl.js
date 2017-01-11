@@ -3,19 +3,35 @@
 const mongoose = require('mongoose')
 const Restaurant = mongoose.model('Restaurant')
 
-// Get all reviews
+// Get all reviews for a restaurant
 module.exports.reviewsGetAll = (req, res) => {
 	const restaurantId = req.params.restaurantId
-	console.log("Get restaurantID", restaurantId)
+	console.log('Get restaurantID', restaurantId)
 	
 	Restaurant
 		.findById(restaurantId)
 		.select('reviews')
 		.exec((err, doc) => {
+			let response = {
+				status: 200,
+				message: []
+			}
+			if (err) {
+				console.log('Error finding restaurant')
+				response.status = 500,
+				response.message = err
+			} else if (!doc) {
+				console.log('Restaurant ID not found in database', restaurantId)
+				response.status = 404,
+				response.message = {
+					'message' : `Restaurant ID ${restaurantId} not found`
+				}
+			} else {
 			console.log('doc', doc)
-			res
-				.status(200)
-				.json(doc.reviews)			
+			res 
+				.status(response.status)
+				.json(response.message)							
+			}
 		})
 }
 
@@ -29,11 +45,34 @@ module.exports.reviewsGetOne = (req, res) => {
 		.findById(restaurantId)
 		.select('reviews')
 		.exec((err, restaurant) => {
-			console.log('Returned restaurant', restaurant)
-			let review = restaurant.reviews.id(reviewId) 
+			let response = {
+				status: 200,
+				message: []
+			}
+			if (err) {
+				console.log('Error finding restaurant')
+				response.status = 500
+				response.message = err
+			}	else if (!doc) {
+				console.log('Restaurant ID not found in database', restaurantId)
+				response.status = 404
+				response.message = {
+					'message' : `Restaurant ID ${restaurantId} not found in database`
+				}				
+			}	else {
+				// Get review
+				response.message = restaurant.reviews.id(reviewId)
+				// If the review doesn't exist Mongoose returns null
+				if (!response.message) {
+					response.status = 404
+					response.message = {
+						'message' : `Review ID ${reviewId} not found`
+					}
+				}				
+			}	
 			res
-				.status(200)
-				.json(review)			
+				.status(response.status)
+				.json(response.message)			
 		})	
 }
 
@@ -61,7 +100,7 @@ let addReview = (req, res, restaurant) => {
 
 module.exports.reviewsAddOne = (req, res) => {
 	const restaurantId = req.params.restaurantId
-	console.log("Get restaurantID", restaurantId)
+	console.log('Get restaurantID', restaurantId)
 	
 	Restaurant
 		.findById(restaurantId)
@@ -76,10 +115,10 @@ module.exports.reviewsAddOne = (req, res) => {
 				response.status = 500
 				response.message = err
 			} else if (!doc) {
-				console.log('Restaurant id not found in database', restaurantId)
+				console.log('Restaurant ID not found in database', restaurantId)
 				response.status = 404
 				response.message = {
-					"message" : `Restaurant ID not found ${restaurantId}`
+					'message' : `Restaurant ID ${restaurantId} not found`
 				}
 			}
 			// If there is a doc add review else send back to err handling			
