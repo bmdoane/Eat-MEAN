@@ -8,14 +8,11 @@ const { reviewsGetAll, reviewsGetOne } = require('../controllers/reviewsCtrl')
 router
 	.route('/restaurants')
 	.get(restaurantsGetAll)
+	.post(restaurantsAddOne)
 
 router
 	.route('/restaurants/:restaurantId')
 	.get(restaurantsGetOne)
-
-router
-	.route('/restaurants/new')
-	.post(restaurantsAddOne)
 
 // Reviews routes
 router

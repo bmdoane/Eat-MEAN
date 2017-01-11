@@ -44,7 +44,7 @@ const restaurantSchema = new Schema({
 		max: 5,
 		"default": 0
 	},
-	type: [String],
+	types: [String],
 	formatted_address: {
 		type: String,
 		required: true

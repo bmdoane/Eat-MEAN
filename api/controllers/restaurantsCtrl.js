@@ -78,7 +78,7 @@ module.exports.restaurantsGetAll = (req, res) => {
 		.limit(count)		
 		.exec((err, restaurants) => {
 			if (err) {
-				console.log("Error finding hotels")
+				console.log("Error finding restaurants")
 				res
 					.status(500)
 					.json(err)
@@ -103,13 +103,14 @@ module.exports.restaurantsGetOne = (req, res) => {
 				message: doc
 			}
 			if (err) {
-				console.log('Error finding hotel')
+				console.log('Error finding restaurant')
 				response.status = 500
 				response.message = err
 			} else if (!doc) {
+				console.log('RestaurantId not found in database', restaurantId)
 				response.status = 404
 				response.message = {
-					"message" : "Hotel ID not found"
+					"message" : `Restaurant ID not found ${restaurantId}`
 				}
 			}
 			res
@@ -118,29 +119,54 @@ module.exports.restaurantsGetOne = (req, res) => {
 		})
 }
 
-module.exports.restaurantsAddOne = (req, res) => {
-	const db = get()
-	const collection = db.collection('restaurants')
-	let newRestaurant
-
-	console.log("Post new restaurant")
-
-	if (req.body && req.body.name && req.body.rating) {
-		newRestaurant = req.body
-		newRestaurant.rating = parseInt(req.body.rating, 10)
-		collection.insertOne(newRestaurant, (err, response) => {
-			console.log(response.ops)
-			res
-				.status(201)
-				.json(response.ops)						
-		})
-	} else {
-		console.log("Data missing from body")
-		res
-			.status(400)
-			.json({ message: "Required data missing from body" })
-	}
+// Helper function
+let _splitArray = (input) => {
+  let output;
+  if (input && input.length > 0) {
+    output = input.split(";")
+  } else {
+    output = []
+  }
+  return output
 }
+
+module.exports.restaurantsAddOne = (req, res) => {
+
+	Restaurant
+		.create({
+			name: req.body.name,
+			rating: parseInt(req.body.rating),
+			photos: _splitArray(req.body.photos),
+			price_level: parseInt(req.body.price_level),
+			types: _splitArray(req.body.types),
+			formatted_address: req.body.formatted_address,
+			geometry: {
+				coordinates: [
+					parseFloat(req.body.lng), 
+					parseFloat(req.body.lat)
+				]
+			}
+		}, (err, restaurant) => {
+			if (err) {
+				console.log('Error creating restaurant')
+				res
+					.status(400)
+					.json(err)
+			} else {
+				console.log('Restaurant created', restaurant)
+				res
+					.status(201)
+					.json(restaurant)
+			}
+		})
+}
+
+
+
+
+
+
+
 
 
 
