@@ -189,3 +189,13 @@ module.exports.reviewsUpdateOne = (req, res) => {
       }
     })	
 }
+
+module.exports.reviewsDeleteOne = (req, res) => {
+	
+}
+
+
+
+
+
+

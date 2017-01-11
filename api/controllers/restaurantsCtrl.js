@@ -162,6 +162,7 @@ module.exports.restaurantsAddOne = (req, res) => {
 		})
 }
 
+// Updating a document
 module.exports.restaurantsUpdateOne = (req, res) => {
 	const restaurantId = req.params.restaurantId
 	console.log('Get restaurantID', restaurantId)
@@ -218,6 +219,26 @@ module.exports.restaurantsUpdateOne = (req, res) => {
 				})				
 			}
 		})	
+}
+
+// Deleting a document
+module.exports.restaurantsDeleteOne = (req, res) => {
+	const restaurantId = req.params.restaurantId
+
+	Restaurant
+		.findByIdAndRemove(restaurantId)
+		.exec((err, restaurant) => {
+			if (err) {
+				res
+					.status(404)
+					.json(err)
+			} else {
+				console.log('Restaurant deleted, ID:', restaurantId)
+				res
+					.status(204)
+					.json()
+			}
+		})		
 }
 
 
