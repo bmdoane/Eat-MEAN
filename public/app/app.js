@@ -1,19 +1,14 @@
 'use strict'
 
-angular.module('eatMEAN', ['ngRoute'])
-	.config(config)
-	.controller('RestaurantCtrl', RestaurantCtrl)
+const app = angular.module('eatMEAN', ['ngRoute'])
+	
+app.config(function($routeProvider) {
 
-	function config($routeProvider) {
-		$routeProvider
-			.when('/', {
-				templateUrl: 'app/restaurant.html',
-				controller: RestaurantCtrl,
-				controllerAs: 'vm'
-			})
-	}
+	$routeProvider
+		.when('/', {
+			templateUrl: 'partials/restaurantList.html',
+			controller: RestaurantListCtrl,
+			controllerAs: 'vm'
+		})
 
-	function RestaurantCtrl() {
-		let vm = this
-		vm.title = 'EatMEAN App'
-	}
+})
