@@ -1,23 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-	<meta charset="UTF-8">
+	<meta charset='UTF-8'>
+<!-- 	<base href=”/”>	 -->
 	<title>Eat MEAN</title>
-	<link rel="stylesheet" href="/lib/bootswatch/superhero/bootstrap.min.css" />
-	<link rel="stylesheet" href="/css/styles.css">
+	<link rel='stylesheet' href='/lib/bootswatch/superhero/bootstrap.min.css' />
+	<link rel='stylesheet' href='/css/styles.css'>
 </head>
-<body>
+<body ng-app='eatMEAN'>
 
-	<h1>Eat MEAN homepage!</h1>
+	<div ng-view></div>
 
-	<footer class="footer">
-		<div class="container">
-			<p class="text-muted text-center">
+	<footer class='footer'>
+		<div class='container'>
+			<p class='text-muted text-center'>
 				<small>&copy; 2016 Eat MEAN Ltd</small>
 			</p>
 		</div>
 	</footer>
 
-	<script src="lib/jquery/dist/jquery.min.js"></script>	
+	<!-- Third Party Scripts -->
+	<script src='/lib/jquery/dist/jquery.min.js'></script>
+	<script src='/lib/angular/angular.min.js'></script>
+	<script src='/lib/angular-route/angular-route.min.js'></script>
+	<!-- Application Script -->
+	<script src='/app/app.js'></script>
+	<!-- Controllers	 -->
+	<script src='/app/controllers/RestaurantListCtrl.js'></script>	
+	<script src='/app/controllers/RestaurantDisplayCtrl.js'></script>
+	<!-- Factories	 -->
+	<script src='/app/factories/RestaurantFactory.js'></script>	
 </body>
 </html>
