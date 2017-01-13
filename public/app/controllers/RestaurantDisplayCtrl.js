@@ -2,10 +2,10 @@
 
 app.controller('RestaurantDisplayCtrl', RestaurantDisplayCtrl)
 
-function RestaurantDisplayCtrl($http, $routeParams) {
+function RestaurantDisplayCtrl($routeParams, RestaurantFactory) {
 	let vm = this
 	let id = $routeParams.id
-	$http.get(`/api/restaurants/${id}`)
+	RestaurantFactory.restaurantDisplay(id)
 		.then((response) => {
 			vm.restaurant = response.data
 		})

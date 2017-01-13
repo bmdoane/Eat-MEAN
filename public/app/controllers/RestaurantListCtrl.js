@@ -2,11 +2,15 @@
 
 app.controller('RestaurantListCtrl', RestaurantListCtrl)
 
-function RestaurantListCtrl($http) {
+function RestaurantListCtrl(RestaurantFactory) {
+	console.log('Hello Nurse!')
+	console.log("RestaurantFactory", RestaurantFactory);
 	let vm = this
 	vm.title = 'EatMEAN App'
-	$http.get('/api/restaurants?count=10').then((response) => {
-		// console.log("response", response)
-		vm.restaurants = response.data
-	})
+	RestaurantFactory.restaurantList()
+		console.log('Not here!')
+		.then((response) => {
+			// console.log("response", response)
+			vm.restaurants = response.data
+		})
 }

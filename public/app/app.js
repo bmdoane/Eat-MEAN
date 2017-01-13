@@ -17,6 +17,6 @@ app.config(function ($routeProvider, $locationProvider) {
 		controllerAs: 'vm'
 	})
 	.otherwise('/')
-		
+
 })
 
