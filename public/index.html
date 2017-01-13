@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang='en' ng-app='eatMEAN'>
+<html lang='en'>
 <head>
 	<meta charset='UTF-8'>
 	<title>Eat MEAN</title>
 	<link rel='stylesheet' href='/lib/bootswatch/superhero/bootstrap.min.css' />
 	<link rel='stylesheet' href='/css/styles.css'>
 </head>
-<body>
+<body ng-app='eatMEAN'>
 
 	<div ng-view></div>
 
@@ -26,5 +26,6 @@
 	<script src='app/app.js'></script>
 	<!-- Controllers	 -->
 	<script src='app/controllers/RestaurantListCtrl.js'></script>	
+	<script src='app/controllers/RestaurantDisplayCtrl.js'></script>	
 </body>
 </html>
