@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('eatMEAN').controller('RestaurantListCtrl', RestaurantListCtrl)
+app.controller('RestaurantListCtrl', RestaurantListCtrl)
 
 function RestaurantListCtrl($http) {
 	let vm = this
