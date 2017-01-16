@@ -4,6 +4,7 @@ const { Router } = require('express')
 const router = Router()
 const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne, restaurantsUpdateOne, restaurantsDeleteOne } = require('../controllers/restaurantsCtrl')
 const { reviewsGetAll, reviewsGetOne, reviewsAddOne, reviewsUpdateOne, reviewsDeleteOne } = require('../controllers/reviewsCtrl')
+const { register, login } = require('../controllers/userCtrl')
 
 router
 	.route('/restaurants')
@@ -26,6 +27,15 @@ router
 	.route('/restaurants/:restaurantId/reviews/:reviewId')
 	.get(reviewsGetOne)	
 	.put(reviewsUpdateOne)
-	.delete(reviewsDeleteOne)	
+	.delete(reviewsDeleteOne)
+
+// Authentication
+router
+	.route('/users/register')
+	.post(register)	
+
+router
+	.route('/users/login')
+	.post(login)			
 		
 module.exports = router
