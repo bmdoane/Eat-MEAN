@@ -10,14 +10,18 @@ app.factory('RestaurantFactory', function($http, $routeParams) {
 		return $http.get(`/api/restaurants/${id}`).then(complete).catch(failed)	
 	}
 
+	const postReview = (id, review) => {
+		return $http.post(`/api/restaurants/${id}/reviews`, review).then(complete).catch(failed)
+	}
+
 	function complete(response) {
-		return response.data
+		return response
 	}
 
 	function failed(error) {
 		console.log('error', error.statusText)
 	}
 
-	return { restaurantList, displayRestaurant }
+	return { restaurantList, displayRestaurant, postReview }
 
 })

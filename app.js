@@ -4,7 +4,7 @@ require('./api/data/dbconnection.js')
 const express = require('express')
 const app = express()
 const path = require('path')
-const { urlencoded } = require('body-parser')
+const { urlencoded, json } = require('body-parser')
 
 const routes = require('./api/routes')
 
@@ -21,6 +21,8 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')))
 // Only need strings and arrays from form body
 app.use(urlencoded({ extended: false }))
+// $http.post in angular sends json
+app.use(json())
 
 app.use('/api', routes)
 
