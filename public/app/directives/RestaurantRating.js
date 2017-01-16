@@ -6,16 +6,15 @@ app.directive('restaurantRating', restaurantRating)
 function restaurantRating() {
 	return {
 		restrict: 'E', // E - element
-		template: '<span>{{ vm.rating }}</span>'
-		// bindToController: true,
-		// controller: 'HotelController',
-		// controllerAs: 'vm',
-		// scope: {
-		// 	rating: '@'
-		// }
+		template: '<span ng-repeat="star in vm.stars track by $index" class="glyphicon glyphicon-star">{{ star }}</span>',
+		bindToController: true,
+		controller: 'RestaurantDisplayCtrl',
+		controllerAs: 'vm',
+		scope: {
+			// This is the attribute
+			stars: '@'
+		}
 	}
 }
 
-// ng-repeat='rating in vm.rating track by $index'
-// class='glyphicon glyphicon-star'
 

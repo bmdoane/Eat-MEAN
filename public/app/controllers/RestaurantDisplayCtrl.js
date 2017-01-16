@@ -9,7 +9,12 @@ app.controller('RestaurantDisplayCtrl', function(RestaurantFactory, $routeParams
 		.then((response) => {
 			console.log("single response", response);
 			vm.restaurant = response
-			vm.rating = response.rating
+			vm.roundedRating = Math.round(response.rating)
+			vm.stars = getStarRating(vm.roundedRating)
 		})
+
+	function getStarRating(stars) {
+		return new Array(stars)
+	}	
 
 })	
