@@ -7,8 +7,7 @@ app.controller('RestaurantListCtrl', function(RestaurantFactory) {
 	
 	RestaurantFactory.restaurantList()
 		.then((response) => {
-			console.log("response", response)
-			vm.restaurants = response
+			vm.restaurants = response.data
 		})
 
 })
