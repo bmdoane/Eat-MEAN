@@ -1,9 +1,9 @@
 'use strict'
 
 app.factory('RestaurantFactory', function($http, $routeParams) {
-
+	
 	const restaurantList = () => {
-		return $http.get('/api/restaurants').then(complete).catch(failed)
+		return $http.get('/api/restaurants?count=10').then(complete).catch(failed)
 	}
 
 	const displayRestaurant = (id) => {
@@ -13,7 +13,7 @@ app.factory('RestaurantFactory', function($http, $routeParams) {
 	function complete(response) {
 		return response.data
 	}
-	
+
 	function failed(error) {
 		console.log('error', error.statusText)
 	}

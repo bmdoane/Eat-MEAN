@@ -9,6 +9,7 @@ app.controller('RestaurantDisplayCtrl', function(RestaurantFactory, $routeParams
 		.then((response) => {
 			console.log("single response", response);
 			vm.restaurant = response
+			vm.rating = response.rating
 		})
 
 })	
