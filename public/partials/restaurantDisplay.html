@@ -1,2 +1,8 @@
-<h1>{{ vm.restaurant.name }}</h1>
-<p>This restaurant has a rating of {{ vm.restaurant.rating }} stars.</p>
+<h1>{{ vm.restaurant.name }} - <restaurant-rating starsAtt="vm.stars"></restaurant-rating>
+</h1>
+<p>{{ vm.restaurant.formatted_address }}</p>
+
+<h3>Reviews</h3>
+<ul>
+	<li ng-repeat='review in vm.restaurant.reviews'><strong>{{ review.name }} says:</strong> {{ review.review }}</li>
+</ul>

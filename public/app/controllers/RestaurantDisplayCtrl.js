@@ -1,12 +1,20 @@
 'use strict'
 
-app.controller('RestaurantDisplayCtrl', RestaurantDisplayCtrl)
+app.controller('RestaurantDisplayCtrl', function(RestaurantFactory, $routeParams) {
 
-function RestaurantDisplayCtrl($routeParams, RestaurantFactory) {
 	let vm = this
 	let id = $routeParams.id
-	RestaurantFactory.restaurantDisplay(id)
+
+	RestaurantFactory.displayRestaurant(id)
 		.then((response) => {
-			vm.restaurant = response.data
+			console.log("single response", response);
+			vm.restaurant = response
+			vm.roundedRating = Math.round(response.rating)
+			vm.stars = getStarRating(vm.roundedRating)
 		})
-}
+
+	function getStarRating(stars) {
+		return new Array(stars)
+	}	
+
+})	
