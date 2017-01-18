@@ -1,8 +1,9 @@
 'use strict'
 
 const mongoose = require('mongoose')
-let User = mongoose.model('User')
-let { hashSync, genSaltSync, compareSync } = require('bcrypt-nodejs')
+const User = mongoose.model('User')
+const { hashSync, genSaltSync, compareSync } = require('bcrypt-nodejs')
+const { sign } = require('jsonwebtoken')
 
 module.exports.register = (req, res) => {
 	console.log('Registering user')
@@ -48,8 +49,11 @@ module.exports.login = (req, res) => {
 			} else {
 				if (compareSync(password, user.password)) {
 					console.log('User found', user)
+					// Args - payload, secret, optional(expires)
+					let token = sign({ userName: user.userName }, 'secret', {expiresIn: 3600 })
 					res
-						.status(200).json(user)									
+						// Token consists of header, payload and verified signature
+						.status(200).json({ success: true, token: token })									
 				} else {
 					res
 						.status(401).json('Unauthorized')
