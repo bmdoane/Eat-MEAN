@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 const { hashSync, genSaltSync, compareSync } = require('bcrypt-nodejs')
-const { sign } = require('jsonwebtoken')
+const { sign, verify } = require('jsonwebtoken')
 
 module.exports.register = (req, res) => {
 	console.log('Registering user')
@@ -50,6 +50,7 @@ module.exports.login = (req, res) => {
 				if (compareSync(password, user.password)) {
 					console.log('User found', user)
 					// Args - payload, secret, optional(expires)
+					// Secret should be an env var
 					let token = sign({ userName: user.userName }, 'secret', {expiresIn: 3600 })
 					res
 						// Token consists of header, payload and verified signature
@@ -60,6 +61,28 @@ module.exports.login = (req, res) => {
 				}
 			}
 		})		
+}
+
+// Tokens need to be sent as part of the headers.authorization
+module.exports.authenticate = (req, res, next) => {
+	let headerExists = req.headers.authorization
+	if (headerExists) {
+		// Authorization Bearer xxx
+		let token = req.headers.authorization.split(' ')[1] 
+		verify(token, 'secret', (error, decoded) => {
+			if (error) {
+				console.log(error)
+				res
+					.status(401).json('Unauthorized')
+			} else {
+				req.user = decoded.userName
+				next()
+			}
+		})
+	} else {
+		res
+			.status(403).json('No token provided')
+	}
 }
 
 

@@ -4,11 +4,11 @@ const { Router } = require('express')
 const router = Router()
 const { restaurantsGetAll, restaurantsGetOne, restaurantsAddOne, restaurantsUpdateOne, restaurantsDeleteOne } = require('../controllers/restaurantsCtrl')
 const { reviewsGetAll, reviewsGetOne, reviewsAddOne, reviewsUpdateOne, reviewsDeleteOne } = require('../controllers/reviewsCtrl')
-const { register, login } = require('../controllers/userCtrl')
+const { register, login, authenticate } = require('../controllers/userCtrl')
 
 router
 	.route('/restaurants')
-	.get(restaurantsGetAll)
+	.get(authenticate, restaurantsGetAll)
 	.post(restaurantsAddOne)
 
 router
