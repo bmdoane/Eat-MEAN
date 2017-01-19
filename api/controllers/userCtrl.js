@@ -8,13 +8,15 @@ const { sign, verify } = require('jsonwebtoken')
 module.exports.register = (req, res) => {
 	console.log('Registering user')
 
-	let userName = req.body.userName
+	let username = req.body.username
 	let name = req.body.name || null
 	let password = req.body.password
 
+	console.log("username", username);
+
 	User
 		.create({
-			userName: userName,
+			username: username,
 			name: name,
 			// Hashing pw with bcrypt
 			password: hashSync(password, genSaltSync(10))
@@ -35,12 +37,12 @@ module.exports.register = (req, res) => {
 module.exports.login = (req, res) => {
 	console.log('Logging in user')
 
-	let userName = req.body.userName
+	let username = req.body.username
 	let password = req.body.password
 
 	User
 		.findOne({
-			userName: userName
+			username: username
 		}).exec((err, user) => {
 			if (err) {
 				console.log(err)
@@ -51,7 +53,7 @@ module.exports.login = (req, res) => {
 					console.log('User found', user)
 					// Args - payload, secret, optional(expires)
 					// Secret should be an env var
-					let token = sign({ userName: user.userName }, 'secret', {expiresIn: 3600 })
+					let token = sign({ username: user.username }, 'secret', {expiresIn: 3600 })
 					res
 						// Token consists of header, payload and verified signature
 						.status(200).json({ success: true, token: token })									
@@ -75,7 +77,7 @@ module.exports.authenticate = (req, res, next) => {
 				res
 					.status(401).json('Unauthorized')
 			} else {
-				req.user = decoded.userName
+				req.user = decoded.username
 				next()
 			}
 		})

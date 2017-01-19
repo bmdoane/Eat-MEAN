@@ -17,6 +17,11 @@ app.config(function ($routeProvider, $locationProvider) {
 		controller: 'RestaurantDisplayCtrl',
 		controllerAs: 'vm'
 	})
+	.when('/register', {
+		templateUrl: '/partials/register.html',
+		controller: 'RegisterCtrl',
+		controllerAs: 'vm'
+	})
 	.otherwise('/')
 
 })
