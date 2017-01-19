@@ -9,7 +9,10 @@
 </head>
 <body ng-app='eatMEAN'>
 
-	<div ng-view></div>
+	<navigation></navigation>
+	<div class='container'>
+		<div ng-view></div>		
+	</div>
 
 	<footer class='footer'>
 		<div class='container'>
@@ -32,6 +35,7 @@
 	<!-- Factories	 -->
 	<script src='/app/factories/RestaurantFactory.js'></script>
 	<!-- Directives	 -->
-	<script src='/app/directives/RestaurantRating.js'></script>	
+	<script src='/app/directives/RestaurantRating.js'></script>
+	<script src='/app/directives/Navigation.js'></script>		
 </body>
 </html>

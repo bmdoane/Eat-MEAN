@@ -8,6 +8,11 @@ app.config(function ($routeProvider, $locationProvider) {
 
   $routeProvider
 	.when('/', {
+		templateUrl: '/partials/main.html'
+		// controller: 'RestaurantListCtrl',
+		// controllerAs: 'vm'
+	})  
+	.when('/restaurants', {
 		templateUrl: '/partials/restaurantList.html',
 		controller: 'RestaurantListCtrl',
 		controllerAs: 'vm'

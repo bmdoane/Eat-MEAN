@@ -3,13 +3,20 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 90px;
 }
+
+.container {
+  padding: 60px 0 0 0;
+}
+
 .padded {
   padding-top: 30px
 }
+
 .footer {
   position: absolute;
   bottom: 0;
