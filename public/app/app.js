@@ -1,6 +1,6 @@
 'use strict'
 
-const app = angular.module('eatMEAN', ['ngRoute'])
+const app = angular.module('eatMEAN', ['ngRoute', 'angular-jwt'])
 
 app.config(function($httpProvider, $routeProvider, $locationProvider) {
 

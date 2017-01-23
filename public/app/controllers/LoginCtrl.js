@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('LoginCtrl', function($http, $location, $window, AuthFactory) {
+app.controller('LoginCtrl', function($http, $location, $window, AuthFactory, jwtHelper) {
 
 	let vm = this
 
@@ -24,6 +24,9 @@ app.controller('LoginCtrl', function($http, $location, $window, AuthFactory) {
         if (response.data.success) {
           $window.sessionStorage.token = response.data.token
           AuthFactory.isLoggedIn = true
+          let token = $window.sessionStorage.token
+          let decodedToken = jwtHelper.decodeToken(token)
+          vm.loggedInUser = decodedToken.username
         }
       }).catch(function(error) {
         console.log(error)
