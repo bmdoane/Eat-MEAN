@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('RestaurantDisplayCtrl', function($route, RestaurantFactory, $routeParams, AuthFactory) {
+app.controller('RestaurantDisplayCtrl', function($route, $routeParams, $window, RestaurantFactory, AuthFactory, jwtHelper) {
 
 	let vm = this
 	let id = $routeParams.id
@@ -26,8 +26,11 @@ app.controller('RestaurantDisplayCtrl', function($route, RestaurantFactory, $rou
 	}
 
 	vm.addReview = () => {
+		let token = jwtHelper.decodeToken($window.sessionStorage.token)
+		let username = token.username
+
 		let postData = {
-			name: vm.name,
+			name: username,
 			rating: vm.rating,
 			review: vm.review
 		}
