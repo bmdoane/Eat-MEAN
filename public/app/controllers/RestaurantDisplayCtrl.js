@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('RestaurantDisplayCtrl', function($route, RestaurantFactory, $routeParams) {
+app.controller('RestaurantDisplayCtrl', function($route, RestaurantFactory, $routeParams, AuthFactory) {
 
 	let vm = this
 	let id = $routeParams.id
@@ -14,6 +14,15 @@ app.controller('RestaurantDisplayCtrl', function($route, RestaurantFactory, $rou
 
 	function getStarRating(stars) {
 		return new Array(stars)
+	}
+
+	// To let only logged in users to add reviews
+	vm.isLoggedIn = () => {
+		if (AuthFactory.isLoggedIn) {
+			return true
+		} else {
+			return false
+		}
 	}
 
 	vm.addReview = () => {
