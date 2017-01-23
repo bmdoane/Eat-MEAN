@@ -8,7 +8,7 @@ const { register, login, authenticate } = require('../controllers/userCtrl')
 
 router
 	.route('/restaurants')
-	.get(authenticate, restaurantsGetAll)
+	.get(restaurantsGetAll)
 	.post(restaurantsAddOne)
 
 router
@@ -21,7 +21,7 @@ router
 router
 	.route('/restaurants/:restaurantId/reviews')
 	.get(reviewsGetAll)
-	.post(reviewsAddOne)
+	.post(authenticate, reviewsAddOne)
 
 router
 	.route('/restaurants/:restaurantId/reviews/:reviewId')
