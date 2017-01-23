@@ -35,6 +35,7 @@ const Restaurant = mongoose.model('Restaurant')
 // }
 
 module.exports.restaurantsGetAll = (req, res) => {
+	console.log(`Requested by: ${req.user}`)
 
 	let offset = 0
 	let count = 5

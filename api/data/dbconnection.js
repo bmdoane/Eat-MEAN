@@ -50,3 +50,4 @@ process.on('SIGTERM', () => {
 
 // Bring in Schemas and Models
 require('./restaurantModel.js')
+require('./userModel.js')
